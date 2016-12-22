@@ -17,7 +17,7 @@ class CreateMenuItemImagesTable extends Migration
             $table->increments('id');
             $table->integer('menu_item_id')->unsigned();
             $table->string('src');
-            $table->string('alt');
+            $table->string('alt')->nullable();
             $table->timestamps();
         });
     }

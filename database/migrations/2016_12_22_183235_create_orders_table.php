@@ -15,7 +15,8 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('status', array('pending', 'acepted', 'declined'));
+            $table->enum('status', array('in_progress', 'canceled', 'pending', 'acepted', 'declined'))
+                  ->default('in_progress');
             $table->timestamps();
         });
     }
