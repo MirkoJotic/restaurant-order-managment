@@ -18,6 +18,10 @@ require('bootstrap-sass');
 
 window.Vue = require('vue');
 require('vue-resource');
+window.VueRouter = require('vue-router');
+Vue.use(VueRouter);
+
+require('masonry-layout');
 
 /**
  * We'll register a HTTP interceptor to attach the "CSRF" header to each of
