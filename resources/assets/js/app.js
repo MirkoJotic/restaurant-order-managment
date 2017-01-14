@@ -12,9 +12,43 @@ require('./bootstrap');
  * the body of the page. From here, you may begin adding components to
  * the application, or feel free to tweak this setup for your needs.
  */
+const start = Vue.component('start', require('./components/Main.vue'));
+const mainOrder = Vue.component('mainOrder', require('./components/MainOrder.vue'));
+const mainRestaurant = Vue.component('mainRestaurant', require('./components/MainRestaurant.vue'));
+const restaurantMenuList = Vue.component('restaurantMenuList', require('./components/RestaurantMenuList.vue'));
+const restaurantMenuListItem = Vue.component('restaurantMenuListItem', require('./components/RestaurantMenuListItem.vue'));
+const restaurantItems = Vue.component('restaurantItems', require('./components/RestaurantItems.vue'));
+const restaurantItemForm = Vue.component('restaurantItem', require('./components/RestaurantItemForm.vue'));
+Vue.component('modal', require('./components/Modal.vue'));
 
-Vue.component('example', require('./components/Example.vue'));
+import FileUpload from 'vue-upload-component'
+Vue.component('FileUpload', FileUpload)
+import store from './store/store';
+
+Vue.debug = true;
+
+var router = new VueRouter({
+  routes:
+  [
+      { path: '/', name: 'start', component: start },
+      { path: '/order', name: 'order', component: mainOrder },
+      { path: '/restaurant', name: 'restaurant', component: mainRestaurant,
+        children: [
+          { path: 'items', name: 'restaurant.items', component: restaurantItems,
+            children: [
+              { path: 'create', name:'restaurant.items.nested.create', component: restaurantItemForm },
+              { path: ':id/edit', name: 'restaurant.items.nested.edit', component: restaurantItemForm }
+            ]
+          }
+        ]
+      }
+  ]
+});
 
 const app = new Vue({
-    el: '#app'
+  el: '#app',
+  store: store,
+  router: router,
+  render: h => h('router-view')
 });
+

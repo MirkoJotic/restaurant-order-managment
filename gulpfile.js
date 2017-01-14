@@ -1,4 +1,4 @@
-const elixir = require('laravel-elixir');
+  const elixir = require('laravel-elixir');
 
 require('laravel-elixir-vue-2');
 
@@ -14,6 +14,10 @@ require('laravel-elixir-vue-2');
  */
 
 elixir(mix => {
+
+    mix.copy('node_modules/font-awesome/fonts', 'public/fonts');
+    mix.copy('node_modules/ionicons/dist/fonts', 'public/fonts');
+
     mix.sass('app.scss')
        .webpack('app.js');
 });

@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use \App\MenuItem as Item;
 use \App\MenuItemImage as ItemImage;
 use \App\Order as Order;
+use Illuminate\Support\Facades\Input;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,9 +17,10 @@ use \App\Order as Order;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function() {
+    return view('index');
 });
+
 // ITEMS //
 
 Route::get('/items', function(Request $request) {
@@ -29,15 +32,20 @@ Route::post('/items/create', function(Request $request){
   $item->save();
   return response()->json($item);
 });
-Route::post('/items/:item_id/update', function(Request $request, $item_id){
-  $item = Item::find($item_id);
+Route::post('/items/view', function(Request $request) {
+  $item = Item::find($request->get('iid'));
+  return response()->json($item);
+});
+Route::post('/items/update', function(Request $request){
+  $item = Item::find($request->get('id'));
   $item->name = $request->get('name');
   $item->description = $request->get('description');
   $item->amount = $request->get('amount');
   $item->save();
+  return response()->json($item);
 });
-Route::post('/items/:item_id/delete', function(Request $request, $item_id){
-  $item = Item::find($item_id);
+Route::post('/items/delete', function(Request $request){
+  $item = Item::find($request->get('iid'));
   $result = $item->delete();
   return response()->json($result);
 });
