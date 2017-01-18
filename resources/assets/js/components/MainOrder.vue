@@ -12,7 +12,7 @@
       </div>
       <div class="cart-wrapper col-md-3">
         <div class="cart row">
-          <!-- <order-cart :order="order"></order-cart> -->
+          <order-cart></order-cart>
         </div>
       </div>
     </div>
