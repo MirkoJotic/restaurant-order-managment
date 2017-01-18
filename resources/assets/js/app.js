@@ -7,6 +7,21 @@
 
 require('./bootstrap');
 
+/*Elixir.webpack.mergeConfig({
+  module: {
+    loaders: [
+      {
+        test: /masonry-layout/,
+        loader: 'imports?define=>false&this=>window'
+      }
+    ],
+    resolve: {
+      aliases: {
+        browser: 'masonry'
+      }
+    }
+  }
+});*/
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the body of the page. From here, you may begin adding components to
@@ -19,10 +34,12 @@ const restaurantMenuList = Vue.component('restaurantMenuList', require('./compon
 const restaurantMenuListItem = Vue.component('restaurantMenuListItem', require('./components/RestaurantMenuListItem.vue'));
 const restaurantItems = Vue.component('restaurantItems', require('./components/RestaurantItems.vue'));
 const restaurantItemForm = Vue.component('restaurantItem', require('./components/RestaurantItemForm.vue'));
-Vue.component('modal', require('./components/Modal.vue'));
 
-import FileUpload from 'vue-upload-component'
-Vue.component('FileUpload', FileUpload)
+Vue.component('modal', require('./components/Modal.vue'));
+Vue.component('order-menu', require('./components/OrderMenu.vue'));
+Vue.component('order-menu-item', require('./components/OrderMenuItem.vue'));
+Vue.component('isotope', require('vueisotope'));
+
 import store from './store/store';
 
 Vue.debug = true;
