@@ -2,27 +2,22 @@
   <div>
     <isotope :list="items" id="root_isotope" class="isoDefault" :options='option' >
       <div v-for="element in items" @click="selected=element">
-        {{element.name}}
-        <br> {{element.id}}
+        <span class="menu-item-name">{{element.name}}</span>
+        <span @click="addToCart(element.id)" class="add-to-cart">
+          <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
+        </span>
       </div>
     </isotope>
   </div>
 </template>
 
 <script>
-  var count = 0;
   export default {
     mounted() {
-
     },
     props: ['items'],
     data: function() {
       return {
-        list: [{name: "John", id: 25 },
-        {name: "Joao", id: 7},
-        {name: "Albert", id: 12},
-        {name: "Jean", id: 100}],
-        selected: null,
         option: {
           getSortData: {
             id: "id"
@@ -32,12 +27,8 @@
       }
     },
     methods: {
-      add: function() {
-        this.list.push({ name: 'Juan', id: count++ });
-      },
-      replace: function() {
-        this.list = [{ name: 'Edgard', id: count++ },
-                     { name: 'James',  id: count++  }];
+      addToCart: function(id) {
+        this.$store.dispatch('addToCart', id)
       }
     }
   }
@@ -145,5 +136,13 @@ body {
   background: hsl( 180, 100%, 50%);
 }
 
+.add-to-cart {
+  cursor: pointer;
+}
 
+.menu-item-name {
+  background-color: black;
+  color: white;
+  opacity: 0.5;
+}
 </style>

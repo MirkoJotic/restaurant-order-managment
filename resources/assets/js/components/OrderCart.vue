@@ -8,19 +8,19 @@
         {{ item.quantity }}
       </span>
       <span class="cart-item-price">
-        {{ cartItem(item.id).amount * item.quantity }}
+        {{ cartItem(item.id).amount }}
       </span>
     </div>
     <div class="cart-total">
       <span class="cart-total-txt">
         Total:
       </span>
-      <span v-if="cart.length > 0" class="cart-total-amount">
-        {{ total + ( cartItem(item.id) * item.quantity ) }}
+      <span class="cart-total-amount">
+        {{ total }}
       </span>
-      <span class="cart-total-amount" v-else>
-        0.00
-      </span>
+    </div>
+    <div v-if="total > 0" class="cart-order">
+      <button class="btn" @click.prevent="placeOrder()">Order</button>
     </div>
   </div>
 </template>
@@ -28,22 +28,33 @@
 <script>
   export default {
     mounted() {
-      console.log("Cart Ready")
     },
     props: [],
     data: function() {
       return {
-        total: 0
       }
     },
     methods: {
       cartItem(id) {
-        return this.$store.getters.getMenuItems.find( mi => mi.id === id )
+        return this.$store.getters.getMenuItems.find( menu_item => menu_item.id === id )
+      },
+      placeOrder() {
+
+        //this.$store.dispatch('placeOrder')
       }
     },
     computed: {
       cart: function() {
         return this.$store.getters.getCartItems
+      },
+      total: function() {
+        var total = 0;
+
+        for (var i = this.cart.length - 1; i >= 0; i--) {
+           total = total + ( this.cartItem(this.cart[i].id).amount * this.cart[i].quantity )
+        }
+        total = Math.round(total * 100) / 100
+        return total.toFixed(2)
       }
     }
   }

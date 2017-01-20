@@ -21,17 +21,22 @@ const mutations = {
     }
     else state.items.push(item);
   },
-  ADD_TO_CART ( state, item ) {
-    var item = state.cartItems.find( i => { return i.id === item.id } )
+  ADD_TO_CART ( state, item_id ) {
+    var item = state.cartItems.find( i => { return i.id === item_id } )
     if ( item ) {
        item.quantity++
        return true;
+        console.log('shouldn\'t reach this point -- inside if item found')
     }
     var orderItem = {
-      id: item.id,
+      id: item_id,
       quantity: 1
     }
+    console.log('orderItem ---')
+    console.log(orderItem)
     state.cartItems.push(orderItem);
+    console.log('cartItems after push of orderItem --- ')
+    console.log(state.cartItems)
   }
 }
 
@@ -57,8 +62,8 @@ const actions = {
       ).catch();
     }
   },
-  addToCart( {commit}, item ) {
-    commit( 'ADD_TO_CART', item );
+  addToCart( {commit}, item_id ) {
+    commit( 'ADD_TO_CART', item_id );
   }
 }
 

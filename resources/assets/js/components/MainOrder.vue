@@ -46,8 +46,11 @@
     background-color: grey;
   }
   .cart {
-    background-color: green;
-    min-height: 40rem;
+    border-radius: 2px;
+    border-color: green;
+    background-color: white;
+    padding: 3px;
+    color: blue;
     margin: 1rem;
   }
 </style>
