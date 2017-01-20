@@ -4,7 +4,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex);
 
 const state = {
-  items: []
+  items: [],
+  cartItems: []
 }
 
 const mutations = {
@@ -19,6 +20,23 @@ const mutations = {
       itemFound.amount = item.amount
     }
     else state.items.push(item);
+  },
+  ADD_TO_CART ( state, item_id ) {
+    var item = state.cartItems.find( i => { return i.id === item_id } )
+    if ( item ) {
+       item.quantity++
+       return true;
+        console.log('shouldn\'t reach this point -- inside if item found')
+    }
+    var orderItem = {
+      id: item_id,
+      quantity: 1
+    }
+    console.log('orderItem ---')
+    console.log(orderItem)
+    state.cartItems.push(orderItem);
+    console.log('cartItems after push of orderItem --- ')
+    console.log(state.cartItems)
   }
 }
 
@@ -43,12 +61,18 @@ const actions = {
         (response) => { commit('ADD_MENU_ITEM', response.body) }, (response) => { console.log(response) }
       ).catch();
     }
+  },
+  addToCart( {commit}, item_id ) {
+    commit( 'ADD_TO_CART', item_id );
   }
 }
 
 const getters = {
   getMenuItems: state => {
     return state.items
+  },
+  getCartItems: state => {
+    return state.cartItems
   }
 }
 
